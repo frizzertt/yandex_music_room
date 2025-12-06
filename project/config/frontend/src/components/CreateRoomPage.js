@@ -69,7 +69,7 @@ export default class CreateRoomPage extends Component {
           <Grid container spacing={4} justifyContent="center">
             <Grid size={12}>
               <Typography variant="h4" align="center" gutterBottom>
-                Create Room
+                Create a Room
               </Typography>
             </Grid>
             
