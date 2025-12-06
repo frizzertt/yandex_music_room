@@ -71,3 +71,17 @@ class CreateRoomView(APIView):
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
             
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+    
+class DeleteRoom(APIView):
+    def post(self, request, format=None):
+        if self.request.session.exists(self.request.session.session_key):
+            host = self.request.session.session_key
+            room_result = Room.objects.filter(host = host)
+            if room_result.exists():
+                room = room_result[0]
+                code = room.code
+                room.delete()
+                return Response({'message': f'Room {code} deleted.'}, status=status.HTTP_200_OK)
+            return Response({'Bad request': 'Room does not exist'})
+        
+        return Response({'Bad Request': 'Invalid host'}, status=status.HTTP_400_BAD_REQUEST) 
